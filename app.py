@@ -15,7 +15,7 @@ class MyEc2(core.Stack):
 
         # <1>
         vpc = ec2.Vpc(
-            self, 'MyFirstEc2-Vpc',
+            self, 'MyEc2-Vpc',
             max_azs=1,
             cidr='10.10.0.0/23',
             subnet_configuration=[
@@ -29,7 +29,7 @@ class MyEc2(core.Stack):
 
         # <2>
         sg = ec2.SecurityGroup(
-            self, 'MyFirstEc2Vpc-Sg',
+            self, 'MyEc2Vpc-Sg',
             vpc=vpc,
             allow_all_outbound=True,
         )
@@ -40,9 +40,11 @@ class MyEc2(core.Stack):
 
         # <3>
         host = ec2.Instance(
-            self, 'MyFirstEc2Instance',
+            self, 'MyEc2Instance',
             instance_type=ec2.InstanceType('t2.micro'),
-            machine_image=ec2.MachineImage.latest_amazon_linux(),
+            machine_image=ec2.MachineImage.generic_linux({
+                'ap-northeast-1': 'ami-09c0c16fc46a29ed9'
+            }),
             vpc=vpc,
             vpc_subnets=ec2.SubnetSelection(subnet_type=ec2.SubnetType.PUBLIC),
             security_group=sg,
