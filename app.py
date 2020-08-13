@@ -42,6 +42,7 @@ class MyEc2(core.Stack):
         host = ec2.Instance(
             self, 'MyEc2Instance',
             instance_type=ec2.InstanceType('t2.micro'),
+            # instance_type=ec2.InstanceType('g4dn.xlarge'),
             machine_image=ec2.MachineImage.generic_linux({
                 'ap-northeast-1': 'ami-09c0c16fc46a29ed9'
             }),
